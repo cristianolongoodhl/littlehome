@@ -35,4 +35,8 @@ define('ARTICLES_FILE','data/articles.json');
   */
 define('ARTICLES_DIR','blog');
 
+/**
+  * path of the access log file
+  */
+define('ACCESS_FILE_PATH','access.log');
 ?>
