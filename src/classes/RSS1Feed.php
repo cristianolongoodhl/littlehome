@@ -34,8 +34,9 @@ class RSS1Feed{
 	 * @param  $description A brief description of the channel's content, function, source, etc. 
 	 */
 	public function __construct($baseURI, $title, $link, $description) {
-		$rdfDocumentType = DOMImplementation::createDocumentType("rdf:RDF");
-		$this->doc = DOMImplementation::createDocument("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:RDF",$rdfDocumentType);
+		$domImplementation = new DOMImplementation();  
+		$rdfDocumentType = $domImplementation->createDocumentType("rdf:RDF");
+		$this->doc = $domImplementation->createDocument("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:RDF",$rdfDocumentType);
 		$this->doc->documentElement->setAttributeNS('http://www.w3.org/2000/xmlns/' ,'xmlns', 'http://purl.org/rss/1.0/');
 		$this->doc->documentElement->setAttributeNS('http://www.w3.org/2000/xmlns/' ,'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
 

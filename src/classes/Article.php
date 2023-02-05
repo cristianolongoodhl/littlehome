@@ -28,12 +28,33 @@ class Article{
 	static function readFromGETParameterURL(){
 		if (!isset($_GET['url']))
 			return FALSE;
+		$url=$_GET['url'];
+	 	//Actually only absolute URI or articles in the ARTICLES_DIR directory are allowed.
+		if (!(Article::isAbsolute($url) || Article::isInArticlesDir($url)))
+			die($url.' not allowed');		
 		$a=new Article();
 		if (!$a->readFromFile($_GET['url']))
 			return FALSE;
 		return $a;		
 	}
 
+	static function isAbsolute($url){
+		return parse_url($url, PHP_URL_SCHEME)!=null;
+	}
+
+	/**
+	 * Check whether $url is an absolute or relative path of a file inside the ARTICLES_DIR
+	 */
+	static function isInArticlesDir($url){
+		//root is considered the directory which contains src
+		$cwd=getcwd();
+		$srcSubpath='src';
+		$rootPath=substr($cwd,0,strlen($cwd)-strlen($srcSubpath));
+		$articlesDirFullPath=realpath($cwd.'/../'.ARTICLES_DIR); 
+		$requestedDirFullPath=dirname(realpath($url));
+		return $articlesDirFullPath === $requestedDirFullPath;
+	}
+	
 	/**
 	  * Parse an article contained a string
 	  * @return TRUE if success, FALSE otherwise
