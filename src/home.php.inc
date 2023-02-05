@@ -105,5 +105,5 @@ if (isset($j->{'foaf:mbox'}) || isset($j->{'foaf:account'}) || isset($j->{'foaf:
 
 	<section>
 		<h2>Credits</h2>
-		<p>Questo sito &egrave; realizzato sulla piattaforma <a $disablelinktxt href="https://www.opendatahacklab.org/littlehomeproject">LITTLE HOME</a>. Vedi anche i <a $disablelinktxt href="https://www.opendatahacklab.org/littlehomeproject/credits.html">crediti</a> per le immagini.</p>
+		<p>Questo sito &egrave; realizzato sulla piattaforma <a $disablelinktxt href="https://github.com/cristianolongoodhl/littlehome">LITTLE HOME</a>. </p>
 	</section>
