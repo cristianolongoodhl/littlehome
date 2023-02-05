@@ -9,9 +9,10 @@ class SocialAccounts{
 	function __construct(){
 	    $this->services=array('http://www.facebook.com','http://www.twitter.com','https://github.com', 'http://telegram.org');
 		$this->presentations = array(
-				    'https://noise.autistici.org' => new AccountPresentation('https://upload.wikimedia.org/wikipedia/commons/8/8b/PICOL_icon_Mail.svg','News Letter su A/I','newsletter_name','newsletter_url'),
-			'http://www.facebook.com' => new AccountPresentation('icons/iconfinder_facebook_alt_115478.png','facebook','facebook_page_name','facebook_page_url'),
-			'http://www.twitter.com' => new AccountPresentation('icons/iconfinder_02_111031.png','twitter','twitter_name','twitter_feed_url'),
+			'https://noise.autistici.org' => new AccountPresentation('https://upload.wikimedia.org/wikipedia/commons/8/8b/PICOL_icon_Mail.svg','News Letter su A/I','newsletter_name','newsletter_url'),
+			'http://www.facebook.com' => new AccountPresentation('icons/iconfinder_facebook_alt_115478.png','Facebook','facebook_page_name','facebook_page_url'),
+			'http://www.twitter.com' => new AccountPresentation('icons/iconfinder_02_111031.png','Twitter','twitter_name','twitter_feed_url'),
+			'http://www.instagram.com' => new AccountPresentation('icons/1159683_instagram_instagram logo_icon.png','Instagram','instagram_name','instagram_feed_url'),
 			'https://github.com' => new AccountPresentation('icons/GitHub-Mark-120px-plus.png','Organizzazione su GitHub','github_name','github_url'),
 		    'https://www.youtube.com' => new AccountPresentation('icons/youtube.png','Canale Youtube','youtube_name','youtube_url'),
 		    'http://telegram.org' => new AccountPresentation('icons/Font_Awesome_5_brands_telegram-plane.svg','Canale Telegram','telegram_name','telegram_url')
