@@ -7,24 +7,25 @@
  */
 
 /**
- * Generate a random character A-Z0-9  string 
+ * Generate a random character 0-9  string 
  * 
  * see https://www.php.net/manual/en/function.rand.php#96583, https://www.php.net/manual/en/function.imagestring.php
  * 
  * @param int $stringSize
  * @return string random string with stringSize chars in A-Z0-9 
  */
-function generateRandomString(int $stringSize){
+function generateRandomNumber(int $stringSize){
 	$randomString = ''; 
 	for ($i=0; $i<$stringSize; $i++) {
 		$d=rand(1,30)%2;
-		$randomString.=$d ? chr(rand(65,90)) : chr(rand(48,57));
+		//$randomString.=$d ? chr(rand(65,90)) : chr(rand(48,57));
+		$randomString.=chr(rand(48,57));
 	}
 	return $randomString;
 }
 session_start();
 $stringSize=4;
-$stringToGuess=generateRandomString($stringSize);
+$stringToGuess=generateRandomNumber($stringSize);
 $_SESSION['captcha']=$stringToGuess;
 $image = imagecreatetruecolor(16+10*$stringSize, 30);
 $backgroundColor = imagecolorallocate($image, 200, 200, 200);

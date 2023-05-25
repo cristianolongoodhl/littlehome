@@ -8,8 +8,45 @@ require_once('classes/Styles.php');
 require_once('classes/Logo.php');
 require_once('classes/Articles.php');
 
+/**
+ * Generate key pairs directory and keys in pem format, if keys directory not exists 
+ * 
+ * @return boolean true if the directory and key pair have been generated
+ */
+function generateKeyPairsIfNotExists(){
+	$keyDirPath='../'.KEYS_DIR;
+	// do nothing if keys dir already exists
+	if (file_exists($keyDirPath))
+		return false;
+	mkdir($keyDirPath);
+	// Generate a new private key
+	$privateKey = openssl_pkey_new(array(
+		"private_key_bits" => 2048,
+		"private_key_type" => OPENSSL_KEYTYPE_RSA,
+	));
+	
+	/*avoid downloading private key pem using htaccess
+	 * see https://httpd.apache.org/docs/2.4/howto/htaccess.html
+	 */
+	file_put_contents($keyDirPath.'/.htaccess', 'Options FollowSymLinks
+RewriteEngine On
+<Files "private.pem">  
+  Require all denied
+</Files>');
+	// Then save the pem for private key
+	if (openssl_pkey_export_to_file($privateKey, $keyDirPath.'/private.pem')!=true){
+		rmdir($keyDirPath);
+		exit(openssl_error_string());
+	}
+	
+	//now generate and save public key
+	$publicKey=openssl_pkey_get_details($privateKey)['key'];
+	file_put_contents($keyDirPath.'/public.pem', $publicKey);
+	return true;
+}
 session_start();
 $p=new Password();
+$keyGenerated=false;
 if (isset($_POST['password'])){
 		$password=$_POST['password'];
 		$o=new Organization();
@@ -26,6 +63,7 @@ if (isset($_POST['password'])){
 				$o->writeToFile('../'.ORGANIZATION_FILE);
 				$s->writeToFile('../'.STYLES_FILE);
 				$l->handleTmpLogoConfirmed();
+				$keyGenerated=generateKeyPairsIfNotExists();
 				session_destroy();
 				include('admin_save.php.inc');
 			} else {
@@ -38,6 +76,7 @@ if (isset($_POST['password'])){
 				$o->writeToFile('../'.ORGANIZATION_FILE);
 				$s->writeToFile('../'.STYLES_FILE);
 				Articles::writeEmpty('../'.ARTICLES_FILE);
+				$keyGenerated=generateKeyPairsIfNotExists();
 				session_destroy();
 				include('admin_save.php.inc');
 			} else {
