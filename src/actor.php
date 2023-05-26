@@ -11,6 +11,9 @@ require_once('classes/Organization.php');
 require_once('classes/Styles.php');
 require_once('classes/ConfigHelper.php');
 require_once('classes/AccessLogUtils.php');
+require_once('classes/Michelf/MarkdownInterface.php');
+require_once('classes/Michelf/Markdown.php');
+
 
 $utils=new LDUtils();
 AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
@@ -30,7 +33,7 @@ $actor->id=$baseURI."actor.php";
 $actor->type="Organization";
 $actor->preferredUsername="info";
 $actor->name=$c->getName();
-$actor->summary=$o->json->{'dcterms:description'};
+$actor->summary=$c->getHTMLDescription();
 if ($logo!=false)
 	$actor->icon=$logo;	
 

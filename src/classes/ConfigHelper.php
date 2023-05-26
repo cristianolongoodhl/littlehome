@@ -85,5 +85,13 @@ class ConfigHelper{
 		} else if ($preceeding) return $s;
 		else return FALSE;
 	}
+	
+	/**
+	 * Convert markdown description of the orgnization in HTML
+	 */
+	function getHTMLDescription(){
+		$parser = new \Michelf\Markdown();
+		return $parser->transform($this->organization->json->{"dcterms:description"});		
+	}
 }
 ?>
