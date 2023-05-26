@@ -34,9 +34,11 @@ $actor->type="Organization";
 $actor->preferredUsername="info";
 $actor->name=$c->getName();
 $actor->summary=$c->getHTMLDescription();
-if ($logo!=false)
-	$actor->icon=$logo;	
-
+if ($logo!=false){
+	$actor->icon=new stdClass();
+	$actor->icon->type="image";
+	$actor->icon->url=$logo;
+}
 //actor collections
 $actor->inbox=$baseURI."inbox.php";
 $actor->outbox=$baseURI."outbox.php";
@@ -49,10 +51,10 @@ $pubKeyPath='../'.KEYS_DIR."/public.pem";
 $actor->publicKey=new stdClass();
 $actor->publicKey->id=$actor->id."#main-key";
 $actor->publicKey->owner=$actor->id;
-$actor->publicKey->publicKekPem=file_get_contents($pubKeyPath);
+$actor->publicKey->publicKeyPem=file_get_contents($pubKeyPath);
 
 header("Content-Type: application/activity+json");
 header('Access-Control-Allow-Origin: *');
 
-print json_encode($actor, JSON_PRETTY_PRINT);
+print json_encode($actor, JSON_PRETTY_PRINT||JSON_UNESCAPED_SLASHES);
 ?>
