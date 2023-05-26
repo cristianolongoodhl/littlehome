@@ -40,6 +40,14 @@ $actor->outbox=$baseURI."outbox.php";
 //dummy followers URI, just used in activity targets
 $actor->followers=$baseURI."followers";
 
+//RSA key (assuming it has been created)
+$pubKeyPath='../'.KEYS_DIR."/public.pem";
+
+$actor->publicKey=new stdClass();
+$actor->publicKey->id=$actor->id."#main-key";
+$actor->publicKey->owner=$actor->id;
+$actor->publicKey->publicKekPem=file_get_contents($pubKeyPath);
+
 header("Content-Type: application/activity+json");
 header('Access-Control-Allow-Origin: *');
 
