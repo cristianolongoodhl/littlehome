@@ -43,7 +43,6 @@ class ConfigHelper{
 	function getLogo($currentToRootPath=''){
 		if (isset($this->organization->json->{'foaf:logo'})){
 			$logoUrl=$this->organization->json->{'foaf:logo'}->{'@id'};
-			echo "<!-- logo url $logoUrl-->\n";
 			if ($this->utils->isAbsoluteUrl($logoUrl)) return $logoUrl;
 			else return $currentToRootPath.$logoUrl;
 		} else 

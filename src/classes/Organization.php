@@ -63,8 +63,8 @@ class Organization extends JsonHelper{
 	/**
 	  * Create the json object representing the address indicated by the user by filling the corresponding form fields.
 	  *
-	  * @param $vars post variables
-	  * @return a json(ld) object representing the address, or null if no address is specified 
+	  * @param $vars array POST variables
+	  * @return Object a json(ld) object representing the address, or null if no address is specified 
 	  */
 	private function getAddressFromForm($vars){
 		$address=new stdClass();
@@ -88,9 +88,9 @@ class Organization extends JsonHelper{
 	/**
 	  * retrieve a social account on a specified service from form fields, return null if the user specified no account on the given service.
 	  *
-	  * @param $presentation the instance of AccountPresentation relative to the specified service
+	  * @param $presentation AccountPresentation the instance of AccountPresentation relative to the specified service
 	  *
-	  * @return the json representation of the social account, null if no such account has been specified
+	  * @return Object the json representation of the social account, null if no such account has been specified
 	  */
 	private function getSocialAccountFromForm($vars, $service,$presentation){
 		$accountName=$vars[$presentation->nameField];
@@ -108,7 +108,7 @@ class Organization extends JsonHelper{
 	  * retrieve all the social accounts indicated by the user when submitting the form
 	  *
 	  *
-	  * @return an array of json object (may be empty)
+	  * @return array an array of json object (may be empty)
 	  */
 	private function getAllSocialAccountsFromForm($vars){
 		$socialAccounts=new SocialAccounts();
