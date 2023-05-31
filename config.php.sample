@@ -44,4 +44,14 @@ define('BASE_URL','http://example.littlehome.it/');
   * path of the access log file
   */
 define('ACCESS_FILE_PATH','access.log');
+
+/**
+  * directory where RSA keys are stored 
+  */  
+define('KEYS_DIR','keys');
+
+/**
+ * The file where known activity pub inbox URIs will be stored
+ */
+define('KNOWN_INBOXES_FILE','known-inboxes.json');
 ?>

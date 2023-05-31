@@ -23,7 +23,7 @@ define('PASSWORD_FILE','pwd.txt');
 /**
   * path of the directory where images will be stored
   */
-define('IMG_DIR','img');
+define('IMG_DIR','.');
 
 /**
   * path of the file with the article sources list.
@@ -44,4 +44,9 @@ define('ACCESS_FILE_PATH','access.log');
   * directory where RSA keys are stored 
   */  
 define('KEYS_DIR','keys');
+
+/**
+ * The file where known activity pub inbox URIs will be stored
+ */
+define('KNOWN_INBOXES_FILE','known-inboxes.json');
 ?>
