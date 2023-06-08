@@ -45,7 +45,6 @@ AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 <body>
 <?php
 include('viewArticle.php.inc');
-include('fbshare.php.inc');
 ?>
 
 

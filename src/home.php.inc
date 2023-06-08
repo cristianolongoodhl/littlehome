@@ -7,7 +7,7 @@ require_once('classes/Michelf/Markdown.php');
 //name is mandatory
 $name=htmlentities($j->{'foaf:name'});
 $css=isset($_GET['bw']) ? 'styles/bw.css' :  'styles/cyangray.css';
-
+$actor='info@'.$_SERVER['SERVER_NAME'];
 ?>
 	<header>
 <?php
@@ -22,7 +22,9 @@ $css=isset($_GET['bw']) ? 'styles/bw.css' :  'styles/cyangray.css';
 		echo "\t\t\t".Address::jsonToString($j->{'org:hasPrimarySite'}->{'locn:address'})."\n";
 	}
 	echo "\t\t\t<a $disablelinktxt href=\"$srcpath/rss1feed.php\" title=\"RSS 1.0 Feed\" type=\"application/rss+xml\"><img src=\"$srcpath/icons/rss-feed-icon.png\" alt=\"RSS feed icon\"></img></a>\n";
-?>
+	//TODO link to actor with acct protocol 
+	echo "\t\t\t<a $disablelinktxt href=\"acct:$actor\" title=\"Attore sul fediverso\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/3/30/Fediverse_logo_proposal_%28mono_version%29.svg\" title=\"Fediverse logo, attribution Eukombos, CC0, via Wikimedia Commons\" alt=\"Fediverse logo\"></img></a>\n";
+	?>
 		</p>
 	</header>
 
@@ -39,11 +41,12 @@ $css=isset($_GET['bw']) ? 'styles/bw.css' :  'styles/cyangray.css';
 <?php
 }
 
-if (isset($j->{'foaf:mbox'}) || isset($j->{'foaf:account'}) || isset($j->{'foaf:phone'}) ){
 ?>
 	<section>
 		<h2>Contatti</h2>
 		<ul class="contacts">
+			<li><a href="<?=$srcpath?>/rss1feed.php" title="RSS 1.0 Feed" type="application/rss+xml"><img src="<?=$srcpath?>/icons/rss-feed-icon.png" alt="RSS feed icon"></img>RSS Feed</a></li>
+			<li><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Fediverse_logo_proposal_%28mono_version%29.svg" alt="Fediverse logo"> Attore nel fediverso <a href="acct:<?=$actor?>">@<?=$actor?></a></li>
 <?php
 	if (isset($j->{'foaf:mbox'})){
 			$mail=str_replace('mailto:','',$j->{'foaf:mbox'}->{'@id'});
@@ -72,7 +75,6 @@ if (isset($j->{'foaf:mbox'}) || isset($j->{'foaf:account'}) || isset($j->{'foaf:
 		</ul>
 	</section>
 <?php
-	}
 	$i=$l->getFirstPastArticleIndex();
 	$articles=$l->json->{'rss:items'}->{'rdf:li'};
 	$numArticles=isset($articles) ? count($articles) : 0;
@@ -82,7 +84,7 @@ if (isset($j->{'foaf:mbox'}) || isset($j->{'foaf:account'}) || isset($j->{'foaf:
 		<h2>Articoli</h2>
 		<ol>
 <?php
-		$n=min($numArticles,$i+2);
+		$n=min($numArticles,$i+5);
 		for(;$i<$n;$i++){
 			$a=$articles[$i];
 			$title=$a->{'rss:title'};

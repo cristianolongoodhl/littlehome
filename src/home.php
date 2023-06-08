@@ -39,7 +39,6 @@ AccessLogUtils::logAccess($uri, ACCESS_FILE_PATH);
 <body>
 <?php
 require('home.php.inc');
-include('fbshare.php.inc');
 ?>
 </body>
 </html>

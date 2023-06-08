@@ -10,13 +10,8 @@ require_once('classes/LDUtils.php');
 require_once('classes/Organization.php');
 require_once('classes/Styles.php');
 require_once('classes/ConfigHelper.php');
-require_once('classes/AccessLogUtils.php');
 require_once('classes/Michelf/MarkdownInterface.php');
 require_once('classes/Michelf/Markdown.php');
-
-
-$utils=new LDUtils();
-AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 
 //URI of the src directory
 //9 is the lenght of actor.php
