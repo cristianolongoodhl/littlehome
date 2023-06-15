@@ -31,7 +31,7 @@ class Articles extends JsonHelper{
 	/**
 	  * Add an article to this list. Articles are ordered by date.
 	  * 
-	  * @param $a an instance of Article
+	  * @param $a Article an instance of Article
 	  */
 	public function add($uri, $a){
 		$item=new stdClass();
@@ -98,7 +98,7 @@ class Articles extends JsonHelper{
 	/**
 	 * Get the index in the json->{'rss:items'}->{'rdf:li'} array of the more recent article with a date not in the future
 	 *
-	 * @return the index of the first past article, if any. FALSE otherwise.
+	 * @return int the index of the first past article, if any. FALSE otherwise.
 	 */
 	public function getFirstPastArticleIndex(){
 		if (!isset($this->json->{'rss:items'}->{'rdf:li'}))

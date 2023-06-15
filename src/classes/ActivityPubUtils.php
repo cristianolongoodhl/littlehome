@@ -1,4 +1,5 @@
 <?php
+require_once 'AcceptActivity.php';
 
 class ActivityPubUtils
 {
@@ -6,12 +7,12 @@ class ActivityPubUtils
 	private $rootDirPath;
 
 	private $srcDirURI;
-
+	
 	/**
 	 * 
 	 * 
 	 * @param string $rootDirPath Relative path to the root installation directory
-	 * @param string $srcDirURI asolute URI of the src directory 
+	 * @param string $srcDirURI absolute URI of the src directory 
 	 */
 	public function __construct($rootDirPath, $srcDirURI)
 	{
@@ -79,6 +80,12 @@ class ActivityPubUtils
 	}
 
 	/**
+	 * Use this method to get the URI of the actor representing the organization
+	 */
+	public function getOrganizationActorURI(){
+		return $this->srcDirURI=$this->srcDirURI.'actor.php';		
+	}
+	/**
 	 * Send activity to the specified remote inbox
 	 * @param object $activity the JSON object representing the activity 
 	 * @param string $inbox
@@ -112,7 +119,8 @@ class ActivityPubUtils
 		$responseInfo = curl_getInfo($ch);
 		print 'HTTP Response code '.$responseInfo["http_code"];
 		if ($result===false)
-			echo ' Curl error: ' . curl_error($ch);
+			print ' Curl error: ' . curl_error($ch);
 		curl_close($ch);
-	}
+		return $result;
+	}	
 }

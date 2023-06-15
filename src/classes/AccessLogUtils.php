@@ -24,8 +24,8 @@ class AccessLogUtils{
 
 	/**
 	 * Record a visit to the page with specified $uri
-	 * @param $uri the URI of the visited page 
-	 * @param $logFilePath path of the log file
+	 * @param $uri string the URI of the visited page 
+	 * @param $logFilePath string path of the log file
 	 */
 	public static function logAccess($uri, $logFilePath){
 		//ACCESS COUNTER

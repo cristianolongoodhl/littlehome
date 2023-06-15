@@ -103,7 +103,7 @@ class Article{
 	/**
 	  * Extract title and date (specified as Multimarkdown Metadata) if any.  
 	  *
- 	  * @return the md file but with metadata removed
+ 	  * @return string the md file but with metadata removed
 	  */ 
 	function extractMetadata($md){
 		if (substr($md,0,3)!=='---')
@@ -133,7 +133,7 @@ class Article{
 	/**
 	  * Get the date formatted in human readable format.
 	  *	
-	  * @return the date as string, null if no date is specified.
+	  * @return string the date as string, null if no date is specified.
 	  */
 	function getDateFormatted(){
 		if (!isset($this->date))
@@ -178,7 +178,6 @@ class Article{
 		$_SESSION[$this->fieldsPrefix.'image']=$this->image;
 		$_SESSION[$this->fieldsPrefix.'content']=$this->content;
 	}
-
 
 }
 ?>

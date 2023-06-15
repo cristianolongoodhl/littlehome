@@ -1,6 +1,6 @@
 <?php
 require_once('../config.php');
-require_once('classes/Activity.php');
+require_once('classes/AcceptActivity.php');
 require_once('classes/ActivityPubUtils.php');
 require_once('classes/AccessLogUtils.php');
 
@@ -18,8 +18,7 @@ function handleFollowRequest($baseURI, $followRequestActivity)
 	$utils=new ActivityPubUtils('../', $baseURI);
 	$inbox=$utils->saveInbox($requester);	
 	
-	$acceptActivity=new Activity($baseURI, 'Accept');
-	$acceptActivity->object=$followRequestActivity->id;
+	$acceptActivity=new AcceptActivity($baseURI, $followRequestActivity->id);	
 	$utils->send($acceptActivity, $inbox);
 }
 

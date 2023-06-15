@@ -10,8 +10,8 @@ class AdminArticleUtils{
 	private $l;
 	/**
 	 *
-	 * @param $articlesDir path of the directory where markdown files are stored
-	 * @param $articlesFile path of the file where articles are listed
+	 * @param $articlesDir string path of the directory where markdown files are stored
+	 * @param $articlesFile string path of the file where articles are listed
 	 */
 	public function __construct($articlesDir, $articlesFile){
 		$this->articlesDir=$articlesDir;
@@ -52,8 +52,8 @@ class AdminArticleUtils{
 
 	/**
 	 * Remove the Markdown file and the article from the articles list.
-	 * @param $uri URI of the article to be removed.
-	 * @param $pathToRoot path from the current execution directory to the root directory (the one where index.php is 		 */
+	 * @param $uri string URI of the article to be removed.
+	 * @param $pathToRoot string path from the current execution directory to the root directory (the one where index.php is 		 */
 	public function removeArticle($uri, $pathToRoot='.'){
 		if ($this->l->readFromFile($pathToRoot.'/'.$this->articlesFile)==FALSE) return FALSE;
 		if ($this->l->remove($uri) && $this->l->writeToFile($pathToRoot.'/'.$this->articlesFile)==FALSE)
