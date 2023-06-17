@@ -1,13 +1,10 @@
 <?php
 require_once('../config.php');
-require_once('classes/AcceptActivity.php');
+require_once('classes/Activity.php');
 require_once('classes/ActivityPubUtils.php');
 require_once('classes/AccessLogUtils.php');
 
-//9 is size of inbox.php
-$baseURI=(empty($_SERVER['HTTPS']) ? 'http' : 'https').'://'.$_SERVER['SERVER_NAME'].(substr($_SERVER['REQUEST_URI'],0,strlen($_SERVER['REQUEST_URI'])-9));
-
-function handleFollowRequest($baseURI, $followRequestActivity)
+function handleFollowRequest($followRequestActivity)
 {
 	$requester=$followRequestActivity->actor;
 	if ($requester===null){
@@ -15,11 +12,11 @@ function handleFollowRequest($baseURI, $followRequestActivity)
 		print 'Invalid format for the incoming message: missing actor field';
 		exit;		
 	}
-	$utils=new ActivityPubUtils('../', $baseURI);
+	$utils=new ActivityPubUtils('../');
 	$inbox=$utils->saveInbox($requester);	
 	
-	$acceptActivity=new AcceptActivity($baseURI, $followRequestActivity->id);	
-	$utils->send($acceptActivity, $inbox);
+	$acceptActivity=Activity::getAcceptActivity($followRequestActivity->id);	
+	$utils->send($acceptActivity, array($inbox));
 }
 
 
@@ -35,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 	switch ($activity->type) {
 		case 'Follow':
-			if ($baseURI.'actor.php' == $activity->object){
+			if (Activity::getOrganizationActorURI() == $activity->object){
 				AccessLogUtils::logAccess("follow request", '../'.ACCESS_FILE_PATH);
-				handleFollowRequest($baseURI, $activity);
+				handleFollowRequest($activity);
 			}
 			//just discard if it isn't a follow request to me
 			break;

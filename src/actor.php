@@ -12,10 +12,12 @@ require_once('classes/Styles.php');
 require_once('classes/ConfigHelper.php');
 require_once('classes/Michelf/MarkdownInterface.php');
 require_once('classes/Michelf/Markdown.php');
+require_once('classes/ActivityPubObject.php');
 
 //URI of the src directory
 //9 is the lenght of actor.php
-$srcURI=(empty($_SERVER['HTTPS']) ? 'http' : 'https').'://'.$_SERVER['SERVER_NAME'].(substr($_SERVER['REQUEST_URI'],0,strlen($_SERVER['REQUEST_URI'])-9));
+$srcURI=ActivityPubObject::getSrcDirURI();
+
 //URI of the installation root
 //4 is the lenght of src/
 $baseURI=substr($srcURI, 0, strlen($srcURI)-4);
@@ -27,7 +29,7 @@ $logo=$c->getLogo($baseURI);
 
 $actor=new stdClass();
 $actor->{"@context"}=array("https://www.w3.org/ns/activitystreams", "https://w3id.org/security/v1");
-$actor->id=$srcURI."actor.php";
+$actor->id=ActivityPubObject::getOrganizationActorURI();
 $actor->type="Organization";
 $actor->preferredUsername="info";
 $actor->name=$c->getName();

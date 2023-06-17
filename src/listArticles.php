@@ -63,8 +63,9 @@ AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 			$dateStr=$date->format('d/m/Y');
 			$title=$a->{'rss:title'};
 			$url=$a->{'@id'};
-			if (!$utils->isAbsoluteURL($url))
-				$url='viewArticle.php?url='.urlencode('../'.$url);
+			//external articles no more handled
+			//if (!$utils->isAbsoluteURL($url))
+			$url='viewArticle.php?url='.urlencode('../'.$url);
 			echo "<li><em class=\"date\">$dateStr</em> <a href=\"$url\">$title</a></li>\n";
 		}
 ?>		

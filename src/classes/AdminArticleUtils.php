@@ -26,16 +26,18 @@ class AdminArticleUtils{
 	 * @param $article the article as Article instance
 	 * @param $pathToRoot path from the current execution directory to the root directory (the one where index.php is placed)	
 	 *
-	 * @return FALSE if fail
+	 * @return FALSE if fail, the id of the added article otherwise
 	 */
 	public function addArticle($filename, $article, $pathToRoot='.'){
 		if ($article->writeToFile($pathToRoot.'/'.$this->articlesDir.'/'.$filename)==FALSE)
 			return FALSE;
 
 		if ($this->l->readFromFile($pathToRoot.'/'.$this->articlesFile)==FALSE) return FALSE;
-		$this->l->add($this->articlesDir.'/'.$filename,$article);
+		$url=$this->articlesDir.'/'.$filename;
+		$this->l->add($url,$article);
 		$res=$this->l->writeToFile($pathToRoot.'/'.$this->articlesFile);
-		return $res;
+		if ($res==false) return false;
+		return $url;
 	}
 
 	/**

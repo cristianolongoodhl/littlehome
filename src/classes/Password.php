@@ -34,9 +34,9 @@ class Password{
 	/**
 	  * Execute an operation only if the correct password is provided.
 	  *
-	  * @param $title used to construct password form title
-	  * @param $backUrl link of the back button
-	  * @param $operation a function wich will be executed if the password is correct, it must return true if succeeds, false otherwise
+	  * @param $title string used to construct password form title
+	  * @param $backUrl string link of the back button
+	  * @param $operation string a function wich will be executed if the password is correct, it must return true if succeeds, false otherwise
 	  */
 	public function secure($title,$backUrl,$operation){
 		if (isset($_POST['password']))
