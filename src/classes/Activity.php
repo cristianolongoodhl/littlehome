@@ -11,7 +11,7 @@ class Activity extends ActivityPubObject{
 	public $object;
 	
 	/**
-	 * @param string $srcURI URI of the src directory
+	 * @param string $id 
 	 * @param string $type activity type
 	 * @param object $object activity object
 	 */
@@ -53,4 +53,14 @@ class Activity extends ActivityPubObject{
 		$a->object=$object;
 		return $a;
 	}	
+	
+	/**
+	 * Get a Delete activity with a dummy id
+	 * @see https://www.w3.org/TR/activitystreams-vocabulary/#dfn-delete
+	 */ 
+	public static function getDeleteActivity(string $object){
+		$a=new Activity(self::getDummyId(), 'Delete');
+		$a->object=$object;
+		return $a;
+	}
 }

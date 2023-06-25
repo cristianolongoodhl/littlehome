@@ -53,5 +53,11 @@ define('KEYS_DIR','keys');
 /**
  * The file where known activity pub inbox URIs will be stored
  */
-define('KNOWN_INBOXES_FILE','known-inboxes.json');
+define('KNOWN_INBOXES_FILE','known-inboxes.csv');
+
+/**
+ * The file where incoming activities are persisted
+ */
+define('INBOX_FILE', 'inbox.json');
+
 ?>
