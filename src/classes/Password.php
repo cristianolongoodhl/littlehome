@@ -98,8 +98,9 @@ class Password{
 	  * Show the page concluding the secured operation execution.
 	  */
 	private function showEndPage($title,$message){
+		print '<!DOCTYPE html>';
+
 ?>
-<!DOCTYPE html>
 <html lang="it">
 <head>
 	<title>LittleHome - <?=$title?> - Fine</title>

@@ -28,10 +28,10 @@ class RSS1Feed{
 	/**
 	 * Create a channel with no items.
 	 *
-	 * @param $baseURI a base uri for RDF resources
-	 * @param $title A descriptive title for the channel.
-	 * @param $link The URL to which an HTML rendering of the channel title will link, commonly the parent site's home or news page. 
-	 * @param  $description A brief description of the channel's content, function, source, etc. 
+	 * @param $baseURI string a base uri for RDF resources
+	 * @param $title string A descriptive title for the channel.
+	 * @param $link string The URL to which an HTML rendering of the channel title will link, commonly the parent site's home or news page. 
+	 * @param  $description string a brief description of the channel's content, function, source, etc. 
 	 */
 	public function __construct($baseURI, $title, $link, $description) {
 		$domImplementation = new DOMImplementation();  

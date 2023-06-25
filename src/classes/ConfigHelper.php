@@ -17,7 +17,7 @@ class ConfigHelper{
 	}
 
 	/**
-	  * @param $currentToRootPath path to go from the directory where the invoking script is placed to the root directory of the project. For example, if the script which call this method
+	  * @param $currentToRootPath string path to go from the directory where the invoking script is placed to the root directory of the project. For example, if the script which call this method
 	  * is placed in the src dir, then $currentToRootPath must be set to '../'. If null it is assumed that the script is running in the root directory
 	  */	
 	function getCss($currentToRootPath=''){
@@ -37,7 +37,7 @@ class ConfigHelper{
 	/**
 	  * return the path of the logo, if any. FALSE otherwise.
 	  *
-	  * @param $currentToRootPath path to go from the directory where the invoking script is placed to the root directory of the project. For example, if the script which call this method
+	  * @param $currentToRootPath string path to go from the directory where the invoking script is placed to the root directory of the project. For example, if the script which call this method
 	  * is placed in the src dir, then $currentToRootPath must be set to '../'. If null it is assumed that the script is running in the root directory
 	  */
 	function getLogo($currentToRootPath=''){
@@ -52,7 +52,7 @@ class ConfigHelper{
 	/**
 	  * Get the organization address formatted in a human readable form, following the italian notation of addresses
 	  *
-	  * @return a string representing the address, if any. FALSE otherwise.
+	  * @return string a string representing the address, if any. FALSE otherwise.
 	  */
 	function getAddress(){
 		$j=$this->organization->json;

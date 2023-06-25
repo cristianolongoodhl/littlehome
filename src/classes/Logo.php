@@ -17,7 +17,7 @@ class Logo{
 	/**
 	  * Set the current logo by extracting it from the organization json stored in session
 	  * 
-	  * @param $orgjson the json object representing the organization
+	  * @param $orgjson object the json object representing the organization
 	  * @return true if a logo is specified in $orgjson, false otherwise 	
 	  */
 	function getTmpLogoFromOrgJson($orgjson){
@@ -51,9 +51,9 @@ class Logo{
 	/**
 	  * Store the logo file passed via post post variable.
 	  *	
-	  * @param $logoFileFieldName name of the input field containing the logo file
+	  * @param $logoFileFieldName string name of the input field containing the logo file
 	  *
-	  * @return new logo file name
+	  * @return string new logo file name
 	  */
 	function upload($logoFileFieldName){
 		$filename=$this->getFilenameAvoidCollisions(basename($_FILES[$logoFileFieldName]['name']));
@@ -74,7 +74,7 @@ class Logo{
 	  * remove the temporary logo file if the case
 	  * 	
 	  * @param $filename
-	  * @param $dir path of the directory where logo file is stored
+	  * @param $dir string path of the directory where logo file is stored
 	  */
 	function clearTmpLogo(){
 		if (!(isset($this->tmpLogo))) 

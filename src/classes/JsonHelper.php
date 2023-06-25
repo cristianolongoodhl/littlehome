@@ -8,7 +8,7 @@ class JsonHelper{
 	public $json;
 	
 	/**
-	  * @param $sessionVariableName the name of the session variable where the json is stored
+	  * @param $sessionVariableName string the name of the session variable where the json is stored
 	  */
 	protected function __construct($sessionVariableName){
 		$this->sessionVariableName=$sessionVariableName;
