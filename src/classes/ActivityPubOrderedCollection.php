@@ -22,7 +22,6 @@ class ActivityPubOrderedCollection extends \ActivityPubObject
 	function __construct(string $id, array $orderedItems)
 	{
 		parent::__construct($id, 'OrderedCollection');
-		$this->actor = self::getOrganizationActorURI();
 		$this->totalItems = count($orderedItems);
 		$this->orderedItems = $orderedItems;
 	}
