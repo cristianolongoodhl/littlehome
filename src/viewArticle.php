@@ -23,6 +23,7 @@ $a=Article::readFromGETParameterURL();
 $title=$a->title;
 $uri=$utils->getCurrentPageURI();
 $disablelinktxt='';
+$currentPageURI=$utils->getCurrentPageURI();
 AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 ?>
 <!DOCTYPE html>
@@ -41,6 +42,7 @@ AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 <?php
 	}
 ?>
+	<script src="logaccess.php?resource=<?=urlencode($currentPageURI)?>"></script>
 </head>
 <body>
 <?php

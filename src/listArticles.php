@@ -20,7 +20,8 @@ $l=new Articles();
 $l->readFromFile('../'.ARTICLES_FILE) or die('unable to read ../'.ARTICLES_FILE); 
 
 $utils=new LDUtils();
-AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
+$currentPageURI=$utils->getCurrentPageURI();
+AccessLogUtils::logAccess($currentPageURI, '../'.ACCESS_FILE_PATH);
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -29,6 +30,7 @@ AccessLogUtils::logAccess($utils->getCurrentPageURI(), '../'.ACCESS_FILE_PATH);
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" type="text/css" href="<?=$css?>" />
 	<link rel="alternate" href="rss1feed.php" title="atricles feed" type="application/rss+xml" />
+	<script src="logaccess.php?resource=<?=urlencode($currentPageURI)?>"></script>
 </head>
 <body>
 	<header>

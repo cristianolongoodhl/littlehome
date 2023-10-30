@@ -35,6 +35,7 @@ AccessLogUtils::logAccess($uri, ACCESS_FILE_PATH);
 	<meta property="og:url" content="<?=$uri?>" />	
 	<meta property="og:title" content="<?=$title?>" />
 	<meta property="og:type" content="website" />
+	<script src="src/logaccess.php?resource=<?=urlencode($uri)?>"></script>
 </head>
 <body>
 <?php

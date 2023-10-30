@@ -41,6 +41,11 @@ define('ARTICLES_DIR','.');
 define('ACCESS_FILE_PATH','access.log');
 
 /**
+ * path of the access log file reporting visits notified via javascript (in order to ignore bot's visits). 
+ */
+define('ACCESS_FILE_PATH_JS','access_human.log');
+
+/**
   * directory where RSA keys are stored 
   */  
 define('KEYS_DIR','keys');
