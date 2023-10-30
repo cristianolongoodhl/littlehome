@@ -60,4 +60,11 @@ define('KNOWN_INBOXES_FILE','known-inboxes.csv');
  * The file where incoming activities are persisted
  */
 define('INBOX_FILE', 'inbox.json');
+
+/**
+ * Base url, mainly for generating rdf resource URLs
+ */
+define('BASE_URL','http://littlehome/');
+
+
 ?>

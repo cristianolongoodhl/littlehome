@@ -28,6 +28,7 @@ require_once('classes/Styles.php');
 require_once('classes/ConfigHelper.php');
 require_once('classes/Articles.php');
 require_once('classes/RSS1Feed.php');
+require_once('classes/AccessLogUtils.php');
 
 $c=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
 $f=new RSS1Feed(BASE_URL,$c->getName(),BASE_URL.'src/listArticles.php', $c->getName().' blog');
@@ -45,4 +46,6 @@ if (isset($l->json->{'rss:items'}->{'rdf:li'}))
 
 header("Content-type:application/rss+xml");
 $f->output();
+
+AccessLogUtils::logAccess('rss1feed', '../'.ACCESS_FILE_PATH);
 ?>
