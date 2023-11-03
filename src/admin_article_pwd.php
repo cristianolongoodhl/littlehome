@@ -15,7 +15,7 @@ $p=new Password();
 $p->readFromFile('../'.PASSWORD_FILE);
 
 function getCreateActivity(string $articleFileName, Article $a){
-	$url=ActivityPubObject::getSrcDirURI().'viewArticle.php?url='.urlencode('../'.$articleFileName);
+	$url=ActivityPubObject::getSrcDirURI().'viewArticle.php?url='.urlencode('../'.$articleFileName).'&from=fediverse';
 	$object=createActivityPubPageObject($url, $a);
 	return Activity::getCreateActivity($url.'&activity', $object);
 }
