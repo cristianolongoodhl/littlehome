@@ -46,12 +46,29 @@ class AdminArticleUtils{
 	 * @return FALSE if fail
 	 */
 	public function updateArticle($uri, $article, $pathToRoot='.'){
+		if ($this->updateArticleFile($uri, $article, $pathToRoot) === FALSE)
+			return FALSE;
+		return $this->updateArticleInList($uri, $article, $pathToRoot);
+	}
+
+	/**
+	 * just replace the markdown file contents
+	 *
+	 * @return FALSE if fail
+	 */
+	private function updateArticleFile($uri, $article, $pathToRoot='.'){
 		$u=new LDUtils();
 		if ($u->isAbsoluteUrl($uri))
 			return FALSE;
 		return $article->writeToFile($pathToRoot.'/'.$uri);
 	}
 
+	private function updateArticleInList($uri, $article, $pathToRoot='.'){			
+		if ($this->l->readFromFile($pathToRoot.'/'.$this->articlesFile)==FALSE) return FALSE;
+		if ($this->l->update($uri, $article, $pathToRoot)==FALSE) return FALSE;
+		return $this->l->writeToFile($pathToRoot.'/'.$this->articlesFile);
+	}
+	
 	/**
 	 * Remove the Markdown file and the article from the articles list.
 	 * @param $uri string URI of the article to be removed.

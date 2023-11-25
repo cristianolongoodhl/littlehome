@@ -58,12 +58,33 @@ class Articles extends JsonHelper{
 			return;
 		}
 	
-		$pos=$i;
 		for($j=$n;$j>$i; $j--)
 			$items->{'rdf:li'}[$j]=$items->{'rdf:li'}[$j-1]; 
 		$items->{'rdf:li'}[$i]=$item;
 	}
 
+	/**
+	 * Update metadata of the article with the specified URI in this list. 
+	 * 
+	 * @param $uri string the URI carachterizing the article
+	 * @param $a Article an instance of Article
+	 */
+	public function update($uri, $a){
+		$items=$this->json->{'rss:items'};
+		if (!isset($items->{'rdf:li'})) return FALSE;
+		
+		$n=count($items->{'rdf:li'});
+		for($i=0; $i<$n; $i++){
+			$x=$items->{'rdf:li'}[$i];
+			if ($uri===$x->{'@id'}){
+				$x->{'rss:title'}=$a->title;
+				//TODO add last update time
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+	
 	/**
 	  * Remove the article with the specified uri.
 	  *
@@ -84,11 +105,8 @@ class Articles extends JsonHelper{
 			return TRUE;
 		}
 
-		for($m=$n-1;$i<$m;$i++){
-			$src=$items->{'rdf:li'}[$i+1]->{'@id'};
-			$tgt=$items->{'rdf:li'}[$i]->{'@id'};
+		for($m=$n-1;$i<$m;$i++)
 			$items->{'rdf:li'}[$i]=$items->{'rdf:li'}[$i+1];		
-		}
 	
 		unset($items->{'rdf:li'}[$m]);
 
