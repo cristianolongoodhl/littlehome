@@ -78,7 +78,7 @@ class Articles extends JsonHelper{
 			$x=$items->{'rdf:li'}[$i];
 			if ($uri===$x->{'@id'}){
 				$x->{'rss:title'}=$a->title;
-				//TODO add last update time
+				$x->{'dc:date'}=$a->date->format(Articles::W3CDATE);
 				return TRUE;
 			}
 		}
