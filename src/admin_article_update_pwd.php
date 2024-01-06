@@ -13,7 +13,6 @@ $p=new Password();
 $p->readFromFile('../'.PASSWORD_FILE);
 
 function updateArticle(){
-	$filename=(new DateTimeImmutable())->format('YmdHisu').'.md';
 	$a=new Article();
 	$a->readFromSession();
 	$oldURI=$_SESSION['oldURI'];

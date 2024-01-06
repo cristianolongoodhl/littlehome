@@ -58,6 +58,11 @@ $actor='info@'.$_SERVER['SERVER_NAME'];
 			echo "\t\t".'<li><img src="'.$srcpath.'/icons/iconfinder_Call01_928412.svg" /> tel <a href="tel:'.$phone.'">'.$phone.'</a></li>'."\n";
 	}
 
+	if (isset($j->{'foaf:isPrimaryTopicOf'})){
+		$externalLinkLabel=isset($j->{'foaf:isPrimaryTopicOf'}->{'dcterms:title'}) ? $j->{'foaf:isPrimaryTopicOf'}->{'dcterms:title'} : '';
+		echo "\t\t".'<li><a href="'.$j->{'foaf:isPrimaryTopicOf'}->{'@id'}.'"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/External_link_font_awesome.svg" />'.$externalLinkLabel.'</a></li>';
+	}
+	
 	$socialAccounts=new SocialAccounts();
 	if (isset($j->{'foaf:account'}))
 		foreach($j->{'foaf:account'} as $account){

@@ -24,6 +24,16 @@ $description=isset($o->json->{'dcterms:description'}) ? $o->json->{'dcterms:desc
 $logo=isset($o->json->{'foaf:logo'}) ? $o->json->{'foaf:logo'}->{'@id'} : '';
 $mail=isset($o->json->{'foaf:mbox'}) ? substr($o->json->{'foaf:mbox'}->{'@id'},7) : '';
 $phone=isset($o->json->{'foaf:phone'}) ? substr($o->json->{'foaf:phone'}->{'@id'},4) : '';
+if (isset($o->json->{'foaf:isPrimaryTopicOf'})){
+	$linkURL=$o->json->{'foaf:isPrimaryTopicOf'}->{'@id'};
+	if (isset($o->json->{'foaf:isPrimaryTopicOf'}->{'dcterms:title'}))
+		$linkName=$o->json->{'foaf:isPrimaryTopicOf'}->{'dcterms:title'};
+	else
+		$linkName='';
+} else {
+	$linkURL='';
+	$linkName='';
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -81,9 +91,14 @@ if (isset($o->json->{'org:hasPrimarySite'}) && isset($o->json->{'org:hasPrimaryS
 			<div class="w3-container w3-teal">
 				<h2>Contatti</h2>
 			</div>
-			<fieldset "w3-container">
+			<fieldset class="w3-container">
 				<p><label for="email">E-mail</label> <input name="email" type="email" value="<?=$mail?>" class="w3-input w3-border" /> </p>
 				<p><label for="phone">Telefono</label>  <input name="phone" type="tel" value="<?=$phone?>" class="w3-input w3-border" /> </p>
+
+				<h3>Collegamento ad una pagina esterna</h3>
+				<p><label for="linkurl">Indirizzo pubblico (URL) della pagina esterna</label><input name="linkurl" type="url" value="<?=$linkURL?>" class="w3-input w3-border" /></p>
+				<p><label for="linkname">Etichetta con la quale sar&agrave; mostrato il collegamento</label> <input name="linkname" type="text" value="<?=$linkName?>" class="w3-input w3-border" /></p>
+
 <?php
 $socialAccounts=new SocialAccounts();
 foreach($socialAccounts->presentations as $service => $presentation){
@@ -99,7 +114,7 @@ foreach($socialAccounts->presentations as $service => $presentation){
 		$accountName=$account->{'foaf:accountName'};
 		$accountURL=$account->{'@id'};
 		echo "\t\t\t\t<label for=\"$nameField\">Nome dell'account</label><input type=\"text\" name=\"$nameField\" value=\"$accountName\" class=\"w3-input w3-border\" />\n";
-		echo "\t\t\t\t<label for=\"$urlField\">indirizzo pubblico (URL) dell'account</label><input type=\"url\" name=\"$urlField\" value=\"$accountURL\" class=\"w3-input w3-border\" />\n";
+		echo "\t\t\t\t<label for=\"$urlField\">Indirizzo pubblico (URL) dell'account</label><input type=\"url\" name=\"$urlField\" value=\"$accountURL\" class=\"w3-input w3-border\" />\n";
 	}
 }
 ?>			

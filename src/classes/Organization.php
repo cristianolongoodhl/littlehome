@@ -56,6 +56,11 @@ class Organization extends JsonHelper{
 			
 			$site->{'locn:address'}=$address;
 		}
+		
+		$externalPage=$this->getExternalPageFromForm($vars);
+		if ($externalPage!=null)
+			$j->{'foaf:isPrimaryTopicOf'}=$externalPage;
+		
 		$this->json=$j;			
 		return true;
 	}
@@ -85,6 +90,21 @@ class Organization extends JsonHelper{
 			return null;
 	}
 
+	/**
+	 * Create the json object representing the external link indicated by the user by filling the corresponding form fields.
+	 *
+	 * @param $vars array POST variables
+	 * @return Object a json(ld) object representing the external link, or null if no external link is specified
+	 */
+	private function getExternalPageFromForm($vars){
+		$page=new stdClass();
+		if (!isset($vars['linkurl']) || strlen(($vars['linkurl']))<=0) return null;
+		$page->{'@id'}=$vars['linkurl'];
+		if (isset($vars['linkname'])&& strlen($vars['linkname'])>0)
+			$page->{'dcterms:title'}=$vars['linkname'];
+		return $page;
+	}
+		
 	/**
 	  * retrieve a social account on a specified service from form fields, return null if the user specified no account on the given service.
 	  *
