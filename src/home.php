@@ -8,6 +8,9 @@ require_once('classes/Articles.php');
 require_once('classes/AccessLogUtils.php');
 
 $c=new ConfigHelper(ORGANIZATION_FILE, STYLES_FILE);
+if (!($c->configured))
+	die('Please, go to <a href="/src/admin.php">admin page</a> to complete the site configuration.');
+
 $j=$c->organization->json;
 
 $title=$c->getName();

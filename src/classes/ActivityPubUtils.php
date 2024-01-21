@@ -126,7 +126,10 @@ class ActivityPubUtils
 	 */
 	public function sendToAll(Activity $activity)
 	{
-		$knownInboxes=file($this->rootDirPath . KNOWN_INBOXES_FILE, FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+		$knownInboxesFilePath=$this->rootDirPath . KNOWN_INBOXES_FILE;
+		if (!file_exists($knownInboxesFilePath))
+			return true;
+		$knownInboxes=file($knownInboxesFilePath, FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
 		return $this->send($activity, $knownInboxes);
 	}
 }

@@ -18,12 +18,12 @@ define('STYLES_FILE','styles.json');
   * path of the file where the MD5 sum of the password is stored. It should be placed out of the public_html directory
   * so that it will not be accessible from web.
   */
-define('PASSWORD_FILE','../outofpublic_html/password.txt');
+define('PASSWORD_FILE','password.txt');
 
 /**
   * path of the directory where images will be stored
   */
-define('IMG_DIR','img');
+define('IMG_DIR','.');
 
 /**
   * path of the file with the article sources list.
@@ -44,6 +44,12 @@ define('BASE_URL','http://example.littlehome.it/');
   * path of the access log file
   */
 define('ACCESS_FILE_PATH','access.log');
+
+/**
+ * path of the access log file reporting visits notified via javascript (in order to ignore bot's visits). 
+ */
+define('ACCESS_FILE_PATH_JS','access_human.log');
+
 
 /**
   * directory where RSA keys are stored 

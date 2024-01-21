@@ -12,6 +12,15 @@ class Articles extends JsonHelper{
 	}
 
 	/**
+	 * Get the number of articles
+	 */
+	public function count(){
+		if (!isset($this->json->{'rss:items'}) || !isset($this->json->{'rss:items'}->{'rdf:li'}))
+			return 0;
+		return count($this->json->{'rss:items'}->{'rdf:li'});
+	}
+	
+	/**
 	  * Create an empty articles list and write to the file at the specified path.
 	  *
 	  * @return TRUE if success, FALSE otherwise.
@@ -119,7 +128,7 @@ class Articles extends JsonHelper{
 	 * @return int the index of the first past article, if any. FALSE otherwise.
 	 */
 	public function getFirstPastArticleIndex(){
-		if (!isset($this->json->{'rss:items'}->{'rdf:li'}))
+		if ($this->count()==0);
 			return FALSE;
 		$articles=$this->json->{'rss:items'}->{'rdf:li'};
 		$currentTime=(new DateTimeImmutable())->getTimestamp();

@@ -4,18 +4,20 @@
   */
 
 class ConfigHelper{
+	public $configured=false;
 	public $organization;
 	public $styles;
 	public $utils;
 
 	public function __construct($organizationFilePath, $stylesFilePath){
 		$this->organization=new Organization();
-		$this->organization->readFromFile($organizationFilePath);
+		if ($this->organization->readFromFile($organizationFilePath)==false)
+			return;
 		$this->styles=new Styles();
-		$this->styles->readFromFile($stylesFilePath);
+		$this->configured=$this->styles->readFromFile($stylesFilePath)!=false;
 		$this->utils=new LDUtils();
 	}
-
+	
 	/**
 	  * @param $currentToRootPath string path to go from the directory where the invoking script is placed to the root directory of the project. For example, if the script which call this method
 	  * is placed in the src dir, then $currentToRootPath must be set to '../'. If null it is assumed that the script is running in the root directory

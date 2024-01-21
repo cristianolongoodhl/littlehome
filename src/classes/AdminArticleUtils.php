@@ -29,6 +29,9 @@ class AdminArticleUtils{
 	 * @return FALSE if fail, the id of the added article otherwise
 	 */
 	public function addArticle($filename, $article, $pathToRoot='.'){
+		$articlesDirPath=$pathToRoot.'/'.$this->articlesDir;
+		if (!file_exists($articlesDirPath))
+			mkdir($articlesDirPath);
 		if ($article->writeToFile($pathToRoot.'/'.$this->articlesDir.'/'.$filename)==FALSE)
 			return FALSE;
 

@@ -10,6 +10,7 @@ $utils=new LDUtils();
 $o=new Organization();
 $l=new Logo('../'.IMG_DIR);
 
+$uploaderror=false;
 if ($o->readFromForm($_POST))
 	$o->storeInSession();
 else{
@@ -20,20 +21,13 @@ else{
 		unset($o->json->{'foaf:logo'});
 	} else if (isset($_FILES['newlogo'])){
 		$filename=$l->upload('newlogo');
-		$l->clearTmpLogo();
-		$utils->addObjectTripleIfNotEmpty($o->json, 'foaf:logo', IMG_DIR.'/'.$filename);
-		$o->storeInSession();
+		if ($filename!=false){
+			$l->clearTmpLogo();
+			$utils->addObjectTripleIfNotEmpty($o->json, 'foaf:logo', IMG_DIR.'/'.$filename);
+			$o->storeInSession();
+		} else $uploaderror=true;
 	}
 }
-if (!isset($o->json))
-	echo "<!-- NOOO -->\n";
-else
-	echo "<!--".(json_encode($o->json))."-->\n";
-
-if (isset($_SESSION['oldlogo']))
-	echo '<!-- oldlogo '.$_SESSION['oldlogo']." -->\n";
-else
-	echo "<!-- NO OLD LOGO -->\n";
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -58,7 +52,9 @@ if (isset($o->json->{'foaf:logo'})){
 } else {
 	echo "\t<p class=\"logopreview\">\n\t\t<em>Nessun logo specificato</em> </p>\n\t\t<p><label for=\"logo\">Inserisci Logo</label>\n";
 }
-?>
+if ($uploaderror)
+	echo "\t<p class=\"logopreview\">\n\t\t<em>Impossibile caricare il nuovo logo</em> </p>\n\t\t<p><label for=\"logo\">Inserisci Logo</label>\n";
+	?>
 		<input type="file" name="newlogo" onchange="submit()" class="w3-input w3-border" /></p>
 		<p><input type="submit" class="w3-btn w3-teal" name="clearLogo" value="Rimuovi Logo" /></p>
 	</form>

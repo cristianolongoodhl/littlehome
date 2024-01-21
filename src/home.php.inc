@@ -81,9 +81,9 @@ $actor='info@'.$_SERVER['SERVER_NAME'];
 	</section>
 <?php
 	$i=$l->getFirstPastArticleIndex();
-	$articles=$l->json->{'rss:items'}->{'rdf:li'};
-	$numArticles=isset($articles) ? count($articles) : 0;
+	$numArticles=$l->count();
 	if ($i!==FALSE && $numArticles>$i){
+		$articles=$l->json->{'rss:items'}->{'rdf:li'};		
 ?>
 	<section>
 		<h2>Articoli</h2>

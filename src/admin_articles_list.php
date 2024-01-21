@@ -33,7 +33,7 @@ $utils=new LDUtils();
 	<h1>Amministrazione Sito - Gestione Articoli</h1>
 
 <?php
-	if (isset($l->json->{'rss:items'}->{'rdf:li'})){
+	if ($l->count()>0){
 		echo "<div class=\"w3-card-4\">\n\t<table class=\"w3-table w3-striped w3-bordered \">\n";	
 		foreach($l->json->{'rss:items'}->{'rdf:li'} as $a){
 			$title=$a->{'rss:title'};
