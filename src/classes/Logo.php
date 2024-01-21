@@ -53,11 +53,12 @@ class Logo{
 	  *	
 	  * @param $logoFileFieldName string name of the input field containing the logo file
 	  *
-	  * @return string new logo file name
+	  * @return string new logo file name, false on failure
 	  */
 	function upload($logoFileFieldName){
 		$filename=$this->getFilenameAvoidCollisions(basename($_FILES[$logoFileFieldName]['name']));
-		move_uploaded_file($_FILES[$logoFileFieldName]['tmp_name'], $this->imgDir.'/'.$filename);
+		if (move_uploaded_file($_FILES[$logoFileFieldName]['tmp_name'], $this->imgDir.'/'.$filename)==false)
+			return false;
 		return $filename;
 	}
 
