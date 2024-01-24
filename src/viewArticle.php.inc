@@ -8,7 +8,7 @@ if (!$a)
 	die("No such article");
 
 $dateStr=$a->getDateFormatted();
-$c=$a->getContentAsHTML();
+$remoteConfig=$a->getContentAsHTML();
 $title=htmlentities($a->title);
 ?>
 	<header>
@@ -41,5 +41,5 @@ $title=htmlentities($a->title);
 	}
 ?>
 
-		<?=$c?>
+		<?=$remoteConfig?>
 	</section>

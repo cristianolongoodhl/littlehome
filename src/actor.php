@@ -22,9 +22,9 @@ $srcURI=ActivityPubObject::getSrcDirURI();
 //4 is the lenght of src/
 $baseURI=substr($srcURI, 0, strlen($srcURI)-4);
 
-$c=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
+$remoteConfig=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
 //4 is the lenght of 'src/';
-$logo=$c->getLogo($baseURI);
+$logo=$remoteConfig->getLogo($baseURI);
 
 
 $actor=new stdClass();
@@ -32,8 +32,8 @@ $actor->{"@context"}=array("https://www.w3.org/ns/activitystreams", "https://w3i
 $actor->id=ActivityPubObject::getOrganizationActorURI();
 $actor->type="Organization";
 $actor->preferredUsername="info";
-$actor->name=$c->getName();
-$actor->summary=$c->getHTMLDescription();
+$actor->name=$remoteConfig->getName();
+$actor->summary=$remoteConfig->getHTMLDescription();
 $actor->url=$baseURI;
 if ($logo!=false){
 	$actor->icon=new stdClass();

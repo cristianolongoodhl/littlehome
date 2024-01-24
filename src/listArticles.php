@@ -10,11 +10,11 @@ require_once('classes/ConfigHelper.php');
 require_once('classes/Articles.php');
 require_once('classes/AccessLogUtils.php');
 
-$c=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
-$orgName=$c->getName();
-$css=$c->getCss('../');
-$logo=$c->getLogo('../');
-$address=$c->getAddress('../');
+$remoteConfig=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
+$orgName=$remoteConfig->getName();
+$css=$remoteConfig->getCss('../');
+$logo=$remoteConfig->getLogo('../');
+$address=$remoteConfig->getAddress('../');
 
 $l=new Articles();
 $l->readFromFile('../'.ARTICLES_FILE) or die('unable to read ../'.ARTICLES_FILE); 

@@ -10,11 +10,11 @@ require_once('classes/Michelf/MarkdownInterface.php');
 require_once('classes/Michelf/Markdown.php');
 require_once('classes/Article.php');
 
-$c=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
-$css=$c->getCss('../');
-$orgName=$c->getName();
-$logo=$c->getLogo('../');
-$address=$c->getAddress('../');
+$remoteConfig=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
+$css=$remoteConfig->getCss('../');
+$orgName=$remoteConfig->getName();
+$logo=$remoteConfig->getLogo('../');
+$address=$remoteConfig->getAddress('../');
 
 $a=new Article();
 if (isset($_POST['fromArticle'])){

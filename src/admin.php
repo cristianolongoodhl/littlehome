@@ -28,6 +28,15 @@ if (file_exists('../'.ORGANIZATION_FILE)){
 		<a href="admin_info.php" class="w3-btn w3-teal ">Inserisci informazioni</a>
 		<a href="admin_clear.php" class="w3-btn w3-teal ">Esci &#10006;</a>
 	</nav>
+	<p>Se invece stai effettuando una migrazione, importa la configurazione dal sito che vuoi migrare.</p>
+	<div class="w3-card-4">
+		<form action="admin_import.php" method="POST" enctype="multipart/form-data">
+			<fieldset class="w3-container">
+				<p><label for="configurl">URL della configurazione del vecchio sito</label><input type="url" class="w3-input w3-border" name="configurl" required placeholder="https://oldsite.org/src/viewConfig.php" /></p>
+				<p><input type="submit" value="Importa" class="w3-btn w3-teal " /></p>
+			</fieldset>
+		</form>	
+	</div>
 <?php
 }
 ?>

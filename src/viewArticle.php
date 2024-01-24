@@ -13,12 +13,12 @@ require_once('classes/Article.php');
 require_once('classes/AccessLogUtils.php');
 
 $utils=new LDUtils(); 
-$c=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
+$remoteConfig=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
 //$orgName=$c->organization->json->{'foaf:name'};
-$orgName=$c->getName();
-$css=$c->getCss('../');
-$logo=$c->getLogo('../');
-$address=$c->getAddress('../');
+$orgName=$remoteConfig->getName();
+$css=$remoteConfig->getCss('../');
+$logo=$remoteConfig->getLogo('../');
+$address=$remoteConfig->getAddress('../');
 $a=Article::readFromGETParameterURL();
 $title=$a->title;
 $uri=$utils->getCurrentPageURI();
