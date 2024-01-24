@@ -82,6 +82,7 @@ $actor='info@'.$_SERVER['SERVER_NAME'];
 <?php
 	$i=$l->getFirstPastArticleIndex();
 	$numArticles=$l->count();
+	echo "i=$i numArticles=$numArticles";
 	if ($i!==FALSE && $numArticles>$i){
 		$articles=$l->json->{'rss:items'}->{'rdf:li'};		
 ?>

@@ -128,11 +128,11 @@ class Articles extends JsonHelper{
 	 * @return int the index of the first past article, if any. FALSE otherwise.
 	 */
 	public function getFirstPastArticleIndex(){
-		if ($this->count()==0);
+		$n=$this->count();
+		if ($n==0)
 			return FALSE;
 		$articles=$this->json->{'rss:items'}->{'rdf:li'};
 		$currentTime=(new DateTimeImmutable())->getTimestamp();
-		$n=count($articles);
 		for($i=0; $i<$n; $i++){
 			$a=$articles[$i];
 			$atime=DateTime::createFromFormat(Articles::ISO8601, $a->{'dc:date'})->getTimestamp();

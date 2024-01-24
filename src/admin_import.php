@@ -27,28 +27,28 @@ if ($loadconfigstatus==true){
 	
 	$utils=new LDUtils();
 	$downloads=array($remoteConfig->styles => STYLES_FILE,
-		$remoteConfig->password => PASSWORD_FILE,
 		$remoteConfig->accesslog =>ACCESS_FILE_PATH,
 		$remoteConfig->accesslogjs => ACCESS_FILE_PATH_JS,
 		$remoteConfig->knowninboxes => KNOWN_INBOXES_FILE,
-		$remoteConfig->inbox => INBOX_FILE, 
-		$remoteConfig->articles => ARTICLES_FILE
+		$remoteConfig->inbox => INBOX_FILE 
 	);
 	
 	
 	echo "\t<table class=\"w3-table-all\">\n";
 	echo "\t\t<tr><th>from</th><th>to</th><th>result</th></tr>\n";
 	
-	// logo
+	// organization
 	$failurecause='';
-	$organizationDownloadOutcome= importOrganization($utils, $remoteConfig, $downloads, $failurecause) ?
-	'OK' : 'Failed: '.$failurecause;
+	$error=!importOrganization($utils, $remoteConfig, $downloads, $failurecause);
+	$organizationDownloadOutcome= $error ? $failurecause : 'OK';
 	echo "\t\t\t<tr><td>$remoteConfig->organization</td><td>".ORGANIZATION_FILE."</td><td>$organizationDownloadOutcome</td></tr>\n";
 	
-	$error=false;
-	
+	//articles
+	$articlesDownloadOutcome=importArticles($utils, $remoteConfig, $downloads, $failurecause);
+	$articlesDownloadOutcomeMessage= $articlesDownloadOutcome ? 'OK' : $failurecause;
+	echo "\t\t\t<tr><td>$remoteConfig->articles</td><td>".ARTICLES_FILE."</td><td>$articlesDownloadOutcomeMessage</td></tr>\n";
+	$error|=$articlesDownloadOutcome;
 	/*
-	 * 	$this->articles=$base.ARTICLES_FILE;
 	 *	$this->keysdir=$base.KEYS_DIR;
 	 */
 	
@@ -109,7 +109,7 @@ function createRequiredDirectories(){
  * @param array downloads put here additional files which must be downloaded
  * @param string $failurecause return parameter for eventual error messages
  * 
- * @return boolean the updated organization json object if succeds, false otherwise
+ * @return boolean true if succeds, false otherwise
  */
 function importOrganization(LDUtils $utils, ConfigObject $remoteConfig, array &$downloads, string &$failurecause){
 	$uri=$remoteConfig->organization;
@@ -127,4 +127,33 @@ function importOrganization(LDUtils $utils, ConfigObject $remoteConfig, array &$
 	$failurecause='unable to write organization file'.ORGANIZATION_FILE;
 	return false;
 }
+
+/**
+ * Setup the articles file by downloading and updating it in accordance with the
+ * local configuration.
+ *
+ * @param LDUtils $utils
+ * @param ConfigObject $remoteConfig configuration of the remote installation
+ * @param array downloads put here additional files which must be downloaded
+ * @param string $failurecause return parameter for eventual error messages
+ *
+ * @return boolean true if succeds, false otherwise
+ */
+function importArticles(LDUtils $utils, ConfigObject $remoteConfig, array &$downloads, string &$failurecause){
+	$articles=$utils->loadRemoteJson($remoteConfig->articles, $failurecause);
+	if ($articles==false) return false;
+	if ($articles->{'rss:items'}!=null && $articles->{'rss:items'}->{'rdf:li'}!=null)
+		foreach ($articles->{'rss:items'}->{'rdf:li'} as $a)
+			if (!$utils->isAbsoluteUrl($a->{'@id'})){
+				$oldUri=$remoteConfig->base.$a->{'@id'};
+				$filename=basename($a->{'@id'});
+				$a->{'@id'}=ARTICLES_DIR.'/'.$filename;
+				$downloads[$oldUri]=$a->{'@id'};
+			}
+	if (file_put_contents('../'.ARTICLES_FILE,json_encode($articles))!=false)
+		return true;
+	$failurecause='unable to write articles file'.ARTICLES_FILE;
+	return false;		
+}
+	
 ?>
