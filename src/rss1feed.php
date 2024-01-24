@@ -30,16 +30,16 @@ require_once('classes/Articles.php');
 require_once('classes/RSS1Feed.php');
 require_once('classes/AccessLogUtils.php');
 
+$base=(new LDUtils())->getBaseURIOfSrc();
 $remoteConfig=new ConfigHelper('../'.ORGANIZATION_FILE, '../'.STYLES_FILE);
-$f=new RSS1Feed(BASE_URL,$remoteConfig->getName(),BASE_URL.'src/listArticles.php', $remoteConfig->getName().' blog');
+$f=new RSS1Feed(BASE_URL,$remoteConfig->getName(),$base.'src/listArticles.php', $remoteConfig->getName().' blog');
 
 $l=new Articles();
-$l->readFromFile('../'.ARTICLES_FILE) or die('unable to read ../'.ARTICLES_FILE); 
-if (isset($l->json->{'rss:items'}->{'rdf:li'}))
+if ($l->readFromFile('../'.ARTICLES_FILE) && $l->count()>0)
 	foreach($l->json->{'rss:items'}->{'rdf:li'} as $a){
 		$url=$a->{'@id'};
 		if (!$remoteConfig->utils->isAbsoluteURL($url))
-			$url=BASE_URL.'src/viewArticle.php?url='.urlencode('../'.$url).'&from=rss';
+			$url=$base.'src/viewArticle.php?url='.urlencode('../'.$url).'&from=rss';
 		$f->add($url,$a->{'rss:title'},$a->{'dc:date'});
 	}
 
