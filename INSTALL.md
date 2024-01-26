@@ -11,3 +11,5 @@ Ensure that the web site directory, aside the files just placed there, has the w
 
 Now copy the `config.php.sample` to a new file `config.php` and here update 
 constants as they fit your environment. Probaly you can leave them unchanged without any trouble.
+
+Now you can enter your site at path src/admin.php and start the little home configuration.
