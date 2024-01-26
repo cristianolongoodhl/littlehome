@@ -16,23 +16,14 @@ require_once('classes/Articles.php');
 function generateKeyPairsIfNotExists(){
 	$keyDirPath='../'.KEYS_DIR;
 	// do nothing if keys dir already exists
-	if (file_exists($keyDirPath))
+	if (!(new LDUtils())->createKeysDirIfNotExists($keyDirPath))
 		return false;
-	mkdir($keyDirPath);
 	// Generate a new private key
 	$privateKey = openssl_pkey_new(array(
 		"private_key_bits" => 2048,
 		"private_key_type" => OPENSSL_KEYTYPE_RSA,
 	));
 	
-	/*avoid downloading private key pem using htaccess
-	 * see https://httpd.apache.org/docs/2.4/howto/htaccess.html
-	 */
-	file_put_contents($keyDirPath.'/.htaccess', 'Options FollowSymLinks
-RewriteEngine On
-<Files "private.pem">  
-  Require all denied
-</Files>');
 	// Then save the pem for private key
 	if (openssl_pkey_export_to_file($privateKey, $keyDirPath.'/private.pem')!=true){
 		rmdir($keyDirPath);

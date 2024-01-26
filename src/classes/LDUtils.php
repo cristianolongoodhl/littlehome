@@ -61,7 +61,7 @@ class LDUtils{
 	 * @param string $failurecause if loading fails, it will contain the failure cause
 	 * @return Object|boolean the json objet if loading succeeded, false otherwise 
 	 */
-	public function loadRemoteJson(string $uri, string &$failurecause){
+	function loadRemoteJson(string $uri, string &$failurecause){
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $uri);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -110,5 +110,30 @@ class LDUtils{
 		}
 		return true;
 	}
+	
+	/**
+	 * Generate the keys directory at the specified path if not exists
+	 *
+	 * @param string $keyDirPath
+	 * @return boolean true if the directory have been generated, false if already existed or if some failure occurred.
+	 */
+	function createKeysDirIfNotExists(string $keyDirPath){
+		// do nothing if keys dir already exists
+		if (file_exists($keyDirPath))
+			return false;
+		
+		if (!mkdir($keyDirPath)){
+			return false;
+		}
+		
+		/* avoid downloading private key pem using htaccess
+		 * see https://httpd.apache.org/docs/2.4/howto/htaccess.html
+		 */
+		return (file_put_contents($keyDirPath.'/.htaccess', 'Options FollowSymLinks
+RewriteEngine On
+<Files "private.pem">
+  Require all denied
+</Files>')!=false); 
+	}			
 }
 ?>

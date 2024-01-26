@@ -6,10 +6,13 @@ require_once 'classes/LDUtils.php';
 if (!isset($_POST['configurl']))
 	die("No configuration specified");
 
+if (!isset($_POST['privatekey']))
+	die("No private key specified");
+
 $remoteConfig=new ConfigObject();
 $error='No error';
 $loadconfigstatus=$remoteConfig->loadRemote($_POST['configurl'], $error);
-	
+$privatekey=trim($_POST['privatekey'])."\n";
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -23,14 +26,17 @@ $loadconfigstatus=$remoteConfig->loadRemote($_POST['configurl'], $error);
 	<h1>Amministrazione Sito - Importazione configurazione</h1>
 <?php 
 if ($loadconfigstatus==true){
-	createRequiredDirectories();
-	
 	$utils=new LDUtils();
+	createRequiredDirectories($utils);
+	storePrivateKeyOrDie($privatekey);
+	
 	$downloads=array($remoteConfig->styles => STYLES_FILE,
 		$remoteConfig->accesslog =>ACCESS_FILE_PATH,
 		$remoteConfig->accesslogjs => ACCESS_FILE_PATH_JS,
 		$remoteConfig->knowninboxes => KNOWN_INBOXES_FILE,
-		$remoteConfig->inbox => INBOX_FILE 
+		$remoteConfig->inbox => INBOX_FILE,
+		$remoteConfig->password => PASSWORD_FILE,
+		$remoteConfig->keysdir.'/public.pem' => KEYS_DIR.'/public.pem'
 	);
 	
 	
@@ -94,10 +100,24 @@ function createDirectoryIfNotExistsOrDie($path){
 
 /**
  * Create the directories required by the local configuration
+ * 
+ * @param LDUtils $utils
  */
-function createRequiredDirectories(){
+function createRequiredDirectories(LDUtils $utils){
 	createDirectoryIfNotExistsOrDie('../'.IMG_DIR);
 	createDirectoryIfNotExistsOrDie('../'.ARTICLES_DIR);
+	if ($utils->createKeysDirIfNotExists('../'.KEYS_DIR)==false)
+		die('Unable to create directory '.KEYS_DIR);
+}
+
+/**
+ * Store the private key in the keysDir
+ * @param string $privatekey
+ */
+function storePrivateKeyOrDie(string $privatekey){
+	$privatekeypath='../'.KEYS_DIR.'/private.pem';
+	if (file_put_contents($privatekeypath, $privatekey)==false)
+		die('Unable to write private key '.$privatekeypath);
 }
 
 /**
