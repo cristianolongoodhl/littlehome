@@ -63,4 +63,15 @@ class Activity extends ActivityPubObject{
 		$a->object=$object;
 		return $a;
 	}
+	
+	/**
+	 * Get a Update activity with a unique id
+	 * @see https://www.w3.org/TR/activitystreams-vocabulary/#dfn-delete
+	 */
+	public static function getUpdateActivity(string $object){
+		$a=new Activity(self::getDummyId(), 'Update');
+		$a->object=$object;
+		return $a;
+	}
+	
 }

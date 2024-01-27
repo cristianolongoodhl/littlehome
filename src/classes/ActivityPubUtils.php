@@ -81,6 +81,8 @@ class ActivityPubUtils
 	 * Send activity to the specified remote inbox
 	 * @param object $activity the JSON object representing the activity 
 	 * @param array $inboxes an array of inboxes where the message will be sent
+	 * 
+	 * @return true on success, false otherwise
 	 */
 	public function send(Activity $activity, array $inboxes)
 	{
@@ -132,4 +134,17 @@ class ActivityPubUtils
 		$knownInboxes=file($knownInboxesFilePath, FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
 		return $this->send($activity, $knownInboxes);
 	}
+	
+	/**
+	 * Send an update activity about the actor description to all the
+	 * known inboxes.
+	 *
+	 * @return boolean true if success, false otherwise
+	 */
+	public function sendActorUpdate(){
+		$u=new ActivityPubUtils('../');
+		$a=Activity::getUpdateActivity(Activity::getOrganizationActorURI());
+		echo json_encode($a, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+		return $u->sendToAll($a);
+	}	
 }

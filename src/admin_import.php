@@ -1,6 +1,7 @@
 <?php 
 require_once 'classes/ConfigObject.php';
 require_once 'classes/LDUtils.php';
+require_once 'classes/ActivityPubUtils.php';
 
 
 if (!isset($_POST['configurl']))
@@ -69,6 +70,10 @@ if ($loadconfigstatus==true){
 		echo "\t\t\t<tr><td>$sourceUri</td><td>$targetFilePath</td><td>$result</td></tr>\n";
 	}
 	echo "\t<table>\n";
+	
+	$updateOutcome=(new ActivityPubUtils('../'))->sendActorUpdate();
+	print $updateOutcome ? '<p>Le notifiche ActivityPub sono state inviate.</p>' :
+		'<p>Errore nell\'invio delle notifiche ActivityPub.</p>';
 ?>
 	<!-- p>Configurazione importata con successo</p -->
 	<nav class="nextprev">
