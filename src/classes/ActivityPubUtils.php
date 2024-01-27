@@ -144,7 +144,6 @@ class ActivityPubUtils
 	public function sendActorUpdate(){
 		$u=new ActivityPubUtils('../');
 		$a=Activity::getUpdateActivity(Activity::getOrganizationActorURI());
-		echo json_encode($a, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 		return $u->sendToAll($a);
 	}	
 }
